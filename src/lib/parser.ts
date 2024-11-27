@@ -36,8 +36,8 @@ const isTopLevelElement = (element: HTMLElement): boolean => {
   return !element.parentElement || !element.parentElement.closest(".top-level");
 };
 
-export function getTopLevelReadableElementsOnPage(): HTMLElement[] {
-  const rootRef = useRef<HTMLDivElement>(null);
+export function getTopLevelReadableElementsOnPage(rootRef:Node): HTMLElement[] {
+  // const rootRef = useRef<HTMLDivElement>(null);
 
   const getReadableNodes = (node: Node): HTMLElement[] => {
     const readableNodes: HTMLElement[] = [];
@@ -64,7 +64,7 @@ export function getTopLevelReadableElementsOnPage(): HTMLElement[] {
   };
 
   // Ensure rootRef.current is not null before invoking getReadableNodes
-  return rootRef.current ? getReadableNodes(rootRef.current) : [];
+  return rootRef ? getReadableNodes(rootRef) : [];
 }
 
 

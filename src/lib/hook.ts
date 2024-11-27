@@ -129,3 +129,29 @@ export function useHoveredParagraphCoordinate(
 
   return hoveredInfo;
 }
+
+/**
+ *  process an uploaded HTML file, analyze its content, and return all DIV nodes.
+ */
+export const useHTMLAnalyzer = () => {
+  const [divElements, setDivElements] = useState<HTMLElement[]>([]);
+
+  const analyzeHTMLFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const parser = new DOMParser();
+      const htmlDoc = parser.parseFromString(e.target?.result as string, "text/html");
+
+      if (htmlDoc) {
+        // Extract all DIV nodes
+        const divs = Array.from(htmlDoc.querySelectorAll("div"));
+        setDivElements(divs);
+      }
+    };
+
+    reader.readAsText(file);
+  };
+
+  return { divElements, analyzeHTMLFile };
+};
+
